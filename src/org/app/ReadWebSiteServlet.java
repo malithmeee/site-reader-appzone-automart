@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 public class ReadWebSiteServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReadWebSiteServlet.class);
-    private static final String cronJob = "0/10 * * * * ?";
+    private static final String cronJob = "0 10,15,20 * * * ?";
     Scheduler scheduler;
     public void init() throws ServletException {
         System.out.println("==================================================");

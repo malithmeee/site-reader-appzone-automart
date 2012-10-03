@@ -23,7 +23,7 @@ public class DataReadingJob implements Job {
             String content = se.extractStrings(false);
             extract(content);
         } catch (ParserException e) {
-            LOGGER.error("Error occre while reading the site {http://www.autolanka.com/buy.asp}", e);
+            LOGGER.error("Error occurs while reading the site {http://www.autolanka.com/buy.asp}", e);
         }
     }
 
@@ -65,14 +65,14 @@ public class DataReadingJob implements Job {
         ResultSet rs = null;
 
         String url = "jdbc:mysql://localhost:3306/automart";
-        String user = "root";
-        String password = "root";
+        String user = "malithn";
+        String password = "Md&#h&*";
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            st.executeUpdate("INSERT INTO adds VALUE('" + count + "', '" + mesage + "','');");
+            st.executeUpdate("INSERT INTO adds VALUE('" + count + "', '" + mesage + "','"+"PENDING"+"');");
 
         } catch (SQLException ex) {
             ex.printStackTrace();

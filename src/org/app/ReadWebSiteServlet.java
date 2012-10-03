@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 public class ReadWebSiteServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReadWebSiteServlet.class);
-    private static final String cronJob = "0 13 * * * ?";
-
+    private static final String cronJob = "0/10 * * * * ?";
+    Scheduler scheduler;
     public void init() throws ServletException {
         System.out.println("==================================================");
         System.out.println("Initialized the cron job");
@@ -33,8 +33,20 @@ public class ReadWebSiteServlet extends HttpServlet {
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
                 .build();
 
-        Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+        scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.start();
         scheduler.scheduleJob(jobDetail, trigger);
+    }
+
+    public void destroy() {
+        System.out.println("==================================================");
+        System.out.println("Shutdown the cron job");
+        try {
+            System.out.println("Site reading cron job stopped {"+cronJob+"}");
+            scheduler.shutdown();
+        } catch (Exception e) {
+            LOGGER.error("Error occur while shutdown the cron job", e);
+        }
+        System.out.println("==================================================");
     }
 }

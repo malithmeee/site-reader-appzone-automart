@@ -65,8 +65,8 @@ public class DataReadingJob implements Job {
         ResultSet rs = null;
 
         String url = "jdbc:mysql://localhost:3306/automart";
-        String user = "malithn";
-        String password = "Md&#h&*";
+        String user = "root";
+        String password = "root";
 
         try {
             Class.forName("com.mysql.jdbc.Driver");

@@ -7,17 +7,22 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class ReadWebSiteServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReadWebSiteServlet.class);
-    private static final String cronJob = "0 10,15,20 * * * ?";
+    private static String cronJob = "";
     Scheduler scheduler;
+
     public void init() throws ServletException {
         System.out.println("==================================================");
+        propertyLoad();
         System.out.println("Initialized the cron job");
         try {
-            System.out.println("Site reading cron job stated {"+cronJob+"}");
+            System.out.println("Site reading cron job stated {" + cronJob + "}");
             SiteReadingCronJob(cronJob);
         } catch (Exception e) {
             LOGGER.error("Error occur while initialize the cron job", e);
@@ -42,11 +47,32 @@ public class ReadWebSiteServlet extends HttpServlet {
         System.out.println("==================================================");
         System.out.println("Shutdown the cron job");
         try {
-            System.out.println("Site reading cron job stopped {"+cronJob+"}");
+            System.out.println("Site reading cron job stopped {" + cronJob + "}");
             scheduler.shutdown();
         } catch (Exception e) {
             LOGGER.error("Error occur while shutdown the cron job", e);
         }
         System.out.println("==================================================");
+    }
+
+    private void propertyLoad() {
+        Properties prop = new Properties();
+
+        try {
+            //load a properties file
+//            prop.load(new FileInputStream("/home/malith/Projects/github/site-reader-appzone-automart/config.properties"));
+            prop.load(new FileInputStream("/home/malithn/apache-tomcat-7.0.27/webapps/SiteReader/config.properties"));
+
+            //get the property value and print it out
+            Property.DATABASE = prop.getProperty("database");
+            Property.DATABASE_USER = prop.getProperty("dbuser");
+            Property.DATABASE_PW = prop.getProperty("dbpassword");
+            cronJob = prop.getProperty("cron.job");
+
+            System.out.println("Property file reading done...");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

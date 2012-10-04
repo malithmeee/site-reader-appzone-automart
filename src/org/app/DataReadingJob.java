@@ -32,22 +32,22 @@ public class DataReadingJob implements Job {
         SimpleDateFormat sdfDate = new SimpleDateFormat("M/dd/yyyy");
         Date now = new Date();
         String strDate = sdfDate.format(now);
-        content = content.replaceAll("\\[Date Added: "+strDate+"\\]", "");
+        content = content.replaceAll("\\[Date Added: " + strDate + "\\]", "");
         String[] contentArray = content.split("\\[More Details\\]");
         int count = 0;
-        for(String oneContent : contentArray) {
+        for (String oneContent : contentArray) {
             String[] onUnit = oneContent.split("Price:");
-            if(onUnit.length == 2) {
+            if (onUnit.length == 2) {
                 String message = onUnit[1]
                         .replaceFirst(" ", "")
                         .replaceAll("\n", ",")
-                        .replace("/=","")
+                        .replace("/=", "")
                         .replace("Additional Info:", "")
                         .replace("Rs.Highest Offer, ", "");
                 if (message.length() <= 160) {
                     count++;
                     String addsId = Integer.toString(count);
-                    System.out.println("Trying to add the data added to the tables: {"+ message +"}");
+                    System.out.println("Trying to add the data added to the tables: {" + message + "}");
                     dbConnection(addsId, message);
                 }
             }
@@ -64,15 +64,15 @@ public class DataReadingJob implements Job {
         Statement st = null;
         ResultSet rs = null;
 
-        String url = "jdbc:mysql://localhost:3306/automart";
-        String user = "root";
-        String password = "root";
+        String url = Property.DATABASE;
+        String user = Property.DATABASE_USER;
+        String password = Property.DATABASE_PW;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            st.executeUpdate("INSERT INTO adds VALUE('" + count + "', '" + mesage + "','"+"PENDING"+"');");
+            st.executeUpdate("INSERT INTO adds VALUE('" + count + "', '" + mesage + "','" + "PENDING" + "');");
 
         } catch (SQLException ex) {
             ex.printStackTrace();

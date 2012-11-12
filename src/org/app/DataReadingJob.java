@@ -5,16 +5,16 @@ import org.htmlparser.util.ParserException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataReadingJob implements Job {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataReadingJob.class);
+    private static final Logger LOGGER = Logger.getLogger(DataReadingJob.class.getName());
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         try {
@@ -23,7 +23,7 @@ public class DataReadingJob implements Job {
             String content = se.extractStrings(false);
             extract(content);
         } catch (ParserException e) {
-            LOGGER.error("Error occurs while reading the site {http://www.autolanka.com/buy.asp}", e);
+            LOGGER.log(Level.WARNING, "Error occurs while reading the site {http://www.autolanka.com/buy.asp}", e);
         }
     }
 

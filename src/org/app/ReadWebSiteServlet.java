@@ -2,18 +2,18 @@ package org.app;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReadWebSiteServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReadWebSiteServlet.class);
+    private static final Logger LOGGER = Logger.getLogger(DataReadingJob.class.getName());
     private static String cronJob = "";
     Scheduler scheduler;
 
@@ -25,7 +25,7 @@ public class ReadWebSiteServlet extends HttpServlet {
             System.out.println("Site reading cron job stated {" + cronJob + "}");
             SiteReadingCronJob(cronJob);
         } catch (Exception e) {
-            LOGGER.error("Error occur while initialize the cron job", e);
+            LOGGER.log(Level.WARNING, "Error occur while initialize the cron job", e);
         }
         System.out.println("==================================================");
     }
@@ -50,7 +50,7 @@ public class ReadWebSiteServlet extends HttpServlet {
             System.out.println("Site reading cron job stopped {" + cronJob + "}");
             scheduler.shutdown();
         } catch (Exception e) {
-            LOGGER.error("Error occur while shutdown the cron job", e);
+            LOGGER.log(Level.WARNING, "Error occur while shutdown the cron job", e);
         }
         System.out.println("==================================================");
     }

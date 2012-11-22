@@ -59,10 +59,7 @@ public class ReadWebSiteServlet extends HttpServlet {
         Properties prop = new Properties();
 
         try {
-            //load a properties file
-//            prop.load(new FileInputStream("/home/malith/Projects/github/site-reader-appzone-automart/config.properties"));
-            prop.load(new FileInputStream("/home/malithn/apache-tomcat-7.0.27/webapps/SiteReader/config.properties"));
-
+            prop.load(new FileInputStream("./SiteReader/config.properties"));
             //get the property value and print it out
             Property.DATABASE = prop.getProperty("database");
             Property.DATABASE_USER = prop.getProperty("dbuser");

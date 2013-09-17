@@ -22,8 +22,8 @@ public class ReadWebSiteServlet extends HttpServlet {
         propertyLoad();
         System.out.println("Initialized the cron job");
         try {
-            System.out.println("Site reading cron job stated {" + cronJob + "}");
-            SiteReadingCronJob(cronJob);
+            System.out.println("Site reading cron job stated {" + Property.CRON_JOB + "}");
+            SiteReadingCronJob(Property.CRON_JOB);
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Error occur while initialize the cron job", e);
         }
@@ -47,7 +47,7 @@ public class ReadWebSiteServlet extends HttpServlet {
         System.out.println("==================================================");
         System.out.println("Shutdown the cron job");
         try {
-            System.out.println("Site reading cron job stopped {" + cronJob + "}");
+            System.out.println("Site reading cron job stopped {" + Property.CRON_JOB + "}");
             scheduler.shutdown();
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Error occur while shutdown the cron job", e);
@@ -64,7 +64,7 @@ public class ReadWebSiteServlet extends HttpServlet {
             Property.DATABASE = prop.getProperty("database");
             Property.DATABASE_USER = prop.getProperty("dbuser");
             Property.DATABASE_PW = prop.getProperty("dbpassword");
-            cronJob = prop.getProperty("cron.job");
+            Property.CRON_JOB = prop.getProperty("cron.job");
 
             System.out.println("Property file reading done...");
 
